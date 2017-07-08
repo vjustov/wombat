@@ -13,8 +13,19 @@ module Wombat
               context = target_page.parser
               context.mechanize_page = mechanize_page
 
+              bind_url_callback(context.url)
               filter_properties(context, page)
             end
+          end
+        end
+
+        def bind_url_callback(url)
+          url_property = @property["url"]
+          callback = url_property.callback
+          if url_property
+            @property["url"].callback = -> (x){
+              url_property.instance_exec(url, &callback)
+            }
           end
         end
       end

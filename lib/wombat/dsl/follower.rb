@@ -14,6 +14,10 @@ module Wombat
       def wombat_property_format
         :follow
       end
+
+      def url(&blk)
+        self["url"] = Property.new("url", nil, &blk)
+      end
     end
   end
 end
